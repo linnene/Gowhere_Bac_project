@@ -1,0 +1,8 @@
+.venv
+.vscode/
+config.py
+config.yaml
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
