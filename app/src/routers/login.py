@@ -3,8 +3,8 @@ from fastapi import APIRouter, Depends ,HTTPException,Query
 from ..db.db import get_db
 from typing import Annotated
 
-from ..schemas.user import UserCreate, UserRead, UserUpdate
-from ..crud.user_db import create_user,get_user_by_id,reflush_user,get_user_by_email
+from ..schemas.user import UserRead, UserUpdate
+from ..crud.user_db import get_user_by_id,reflush_user,get_user_by_email
 
 router = APIRouter()
 
