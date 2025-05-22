@@ -29,7 +29,7 @@ async def encode_refresh_token(UserId:str,db:AsyncSession):
 
     header={
         'typ': 'refresh_token',
-        'alg': 'US256',
+        'alg': 'HS256',
     }
 
     payload = {
@@ -68,7 +68,7 @@ async def encode_access_token(UserId:str,db:AsyncSession):
 
     header={
         'typ': 'access_token',
-        'alg': 'US256',
+        'alg': 'HS256',
     }
 
     payload = {
@@ -106,6 +106,7 @@ async def v_access_token(accesstoken:str):
     """
         验证accessToken
     """
+    
     pyload = jwt.decode(
             accesstoken, 
             settings.token_secret_key, 

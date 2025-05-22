@@ -43,7 +43,7 @@ async def creat_user(
 
 @router.get(
 "/get_user", 
-# response_model=UserRead
+response_model=UserRead
 )
 async def get_user(
     user_id: str, 
