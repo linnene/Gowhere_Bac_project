@@ -4,7 +4,7 @@ from fastapi import BackgroundTasks
 from ..schemas.email import EmailSchema
 from config import conf
 from .base import get_verify_code
-from .redis import set_value
+from .redis_utils import set_value
 
 from jinja2 import Template 
 from config import conf

@@ -7,7 +7,7 @@ from typing import Annotated
 
 
 from ..crud.email import send_email
-from ..crud.redis import verify_redis_code
+from ..crud.redis_utils import verify_redis_code
 from ..crud.user_db import set_user_emaliVer
 from ..db.db import get_db
 
