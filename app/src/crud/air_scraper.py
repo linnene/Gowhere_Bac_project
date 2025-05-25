@@ -5,8 +5,8 @@ import re
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 
-from schemas.base import DATE, TIME, Itinerary_time
-from schemas.tools import Air
+from ..schemas.base import DATE, TIME, Itinerary_time
+from ..schemas.tools import Air
 from config import path, id, config
 
 __all__ = ['get_air_info']

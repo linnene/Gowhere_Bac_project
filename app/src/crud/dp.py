@@ -4,14 +4,12 @@ from typing import List
 import json
 
 # from crud.dp import get_chat_by_id
-from schemas.tools import Hotel
-from schemas.base import DATE
-from crud.dp import extract_text,handle_tool_call
-from config import ds_pormpt
+from ..schemas.tools import Hotel
+from ..schemas.base import DATE
+from promot import ds_pormpt
 from .air_scraper import get_air_info
-from config import ds_pormpt, tools_list
+from promot import tools_list
 from config import get_ds_client
-from crud.dp import extract_text
 
 
 def send_message(message):
@@ -55,18 +53,6 @@ def handle_tool_call(tool_call):
     else:
         raise NotImplementedError(f"未注册的工具函数: {tool_name}")
 
-#CRUD：从JSON模板文件中读取模板
-def load_template_from_json(file_path="d:\\gowhere_pro\\GOWHERE_AI\\src\\templates\\travel_plan_template.json"):
-    try:
-        if os.path.exists(file_path):
-            with open(file_path, 'r', encoding='utf-8') as f:
-                return f.read()
-        else:
-            print(f"警告: 模板文件不存在: {file_path}")
-            return "{}"
-    except Exception as e:
-        print(f"读取模板文件时出错: {e}")
-        return "{}"
 
 #CRUD：从ChatCompletion对象提取文本内容
 def extract_text(chat_completion):
@@ -117,7 +103,7 @@ def get_Air(dep_air:str, des_air:str, date:str):
 
 
 #CRUD：获取指定地点附近酒店信息（10km？）TODO:实现函数
-def get_Hotel_by_loc(location:str, date:DATE)-> List[Hotel]:
+def get_Hotel_by_loc(location:str, date:DATE):
     """
     搜索指定酒店名称的酒店信息include：
         hotel_name: str, 酒店名称
@@ -132,7 +118,7 @@ def get_Hotel_by_loc(location:str, date:DATE)-> List[Hotel]:
     pass
 
 #CRUD：获取指定酒店信息（10km？） TODO:实现函数
-def get_Hotel_by_name(hotel_name:str,date:DATE)-> Hotel:
+def get_Hotel_by_name(hotel_name:str,date:DATE):
     """
     搜索指定酒店名称的酒店信息include：
         hotel_name: str, 酒店名称
@@ -150,7 +136,7 @@ def get_Hotel_by_name(hotel_name:str,date:DATE)-> Hotel:
 """
 目前只有国内编码数据库，国外天气数据考虑使用google maps API 或者爬虫网站
 """
-def  get_weather_by_loc(location:str,date)-> str:
+def  get_weather_by_loc(location:str,date):
     """
     获取指定地点的天气信息
     """
