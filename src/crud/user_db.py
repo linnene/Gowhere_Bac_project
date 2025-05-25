@@ -78,18 +78,15 @@ async def reflush_user(new_user: UserUpdate ,user_id: str ,db: AsyncSession):
         
     return cur_user
 
-async def reflush_user_chat(user_id: str,db: AsyncSession, chat: list[dict]):
-    """
-    更新用户对话记录
-    """
-    async with db.begin():
-        cur_user = await get_user_by_id(user_id, db) 
-        if cur_user is None:
-            raise HTTPException(status_code=404, detail="User not found")
-        
-        cur_user.ChatHistory = json.dumps(chat)
-    await db.flush()
-        
+async def reflush_user_chat(user_id: str, db: AsyncSession, chat: list[dict]):
+    cur_user = await get_user_by_id(user_id, db)
+    if cur_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    cur_user.ChatHistory = json.dumps(chat)
+    await db.flush()    # 刷新到数据库
+    await db.commit()   # 提交事务，确保保存
+
     return cur_user
 
 

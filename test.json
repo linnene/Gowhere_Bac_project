@@ -1,0 +1,189 @@
+{
+	"title": "重庆出发·厦门两日游",
+	"description": "这是一次从重庆出发到厦门的短途旅行，包括游览鼓浪屿、南普陀寺等著名景点。在这两天中，您将体验厦门独特的海岛风光和文化魅力。",
+	"total_days": 2,
+	"start_date": "2025-05-27",
+	"end_date": "2025-05-28",
+	"total_budget": 2000.0,
+	"daily_plans": [
+		{
+			"day_num": 1,
+			"task": "从重庆出发前往厦门，抵达后游览鼓浪屿",
+			"itinerary_dep": [
+				{
+					"Des": "从重庆江北国际机场T3航站楼出发，乘坐中国国航航班",
+					"Dep_Date": {
+						"date": {
+							"year": 2025,
+							"month": 5,
+							"day": 27
+						},
+						"time": {
+							"hour": 8,
+							"minute": 10
+						}
+					},
+					"Dep_Place": "重庆江北国际机场T3航站楼",
+					"Price": 630
+				}
+			],
+			"itinerary_des": [
+				{
+					"Des": "抵达厦门高崎国际机场T4航站楼，乘坐机场大巴前往市区",
+					"Des_Date": {
+						"date": {
+							"year": 2025,
+							"month": 5,
+							"day": 27
+						},
+						"time": {
+							"hour": 10,
+							"minute": 45
+						}
+					},
+					"Des_Place": "厦门高崎国际机场T4航站楼",
+					"Price": 30
+				}
+			],
+			"stay_in": [
+				{
+					"Des": "入住厦门鼓浪屿附近的酒店，方便游览",
+					"stay_date": {
+						"date": {
+							"year": 2025,
+							"month": 5,
+							"day": 27
+						}
+					},
+					"stay_place": "厦门鼓浪屿酒店"
+				}
+			],
+			"stay_out": null,
+			"attr_in": [
+				{
+					"Des": "游览鼓浪屿，参观日光岩、菽庄花园等景点",
+					"attr_place": "鼓浪屿",
+					"attr_time": {
+						"date": {
+							"year": 2025,
+							"month": 5,
+							"day": 27
+						},
+						"time": {
+							"hour": 14,
+							"minute": 0
+						}
+					}
+				}
+			],
+			"attr_out": [
+				{
+					"Des": "在鼓浪屿品尝当地海鲜晚餐",
+					"price": "150元/人",
+					"attr_place": "鼓浪屿",
+					"attr_time": {
+						"date": {
+							"year": 2025,
+							"month": 5,
+							"day": 27
+						},
+						"time": {
+							"hour": 19,
+							"minute": 30
+						}
+					}
+				}
+			]
+		},
+		{
+			"day_num": 2,
+			"task": "游览南普陀寺，然后返回重庆",
+			"itinerary_dep": [
+				{
+					"Des": "从厦门高崎国际机场T4航站楼出发，乘坐中国国航航班",
+					"Dep_Date": {
+						"date": {
+							"year": 2025,
+							"month": 5,
+							"day": 28
+						},
+						"time": {
+							"hour": 17,
+							"minute": 30
+						}
+					},
+					"Dep_Place": "厦门高崎国际机场T4航站楼",
+					"Price": 650
+				}
+			],
+			"itinerary_des": [
+				{
+					"Des": "抵达重庆江北国际机场T3航站楼，旅程结束",
+					"Des_Date": {
+						"date": {
+							"year": 2025,
+							"month": 5,
+							"day": 28
+						},
+						"time": {
+							"hour": 20,
+							"minute": 0
+						}
+					},
+					"Des_Place": "重庆江北国际机场T3航站楼",
+					"Price": 0
+				}
+			],
+			"stay_in": null,
+			"stay_out": [
+				{
+					"Des": "退房厦门鼓浪屿酒店",
+					"leave_date": {
+						"date": {
+							"year": 2025,
+							"month": 5,
+							"day": 28
+						}
+					},
+					"leave_place": "厦门鼓浪屿酒店",
+					"price": "500元/晚"
+				}
+			],
+			"attr_in": [
+				{
+					"Des": "参观南普陀寺，感受佛教文化",
+					"attr_place": "南普陀寺",
+					"attr_time": {
+						"date": {
+							"year": 2025,
+							"month": 5,
+							"day": 28
+						},
+						"time": {
+							"hour": 9,
+							"minute": 0
+						}
+					}
+				}
+			],
+			"attr_out": [
+				{
+					"Des": "结束南普陀寺参观，在附近享用午餐",
+					"price": "100元/人",
+					"attr_place": "南普陀寺",
+					"attr_time": {
+						"date": {
+							"year": 2025,
+							"month": 5,
+							"day": 28
+						},
+						"time": {
+							"hour": 12,
+							"minute": 0
+						}
+					}
+				}
+			]
+		}
+	]
+}
