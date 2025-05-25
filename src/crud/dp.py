@@ -1,15 +1,14 @@
 #type: ignore
+from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
 import json
 
-# from crud.dp import get_chat_by_id
-from ..schemas.base import DATE
-from ..crud.user_db import get_user_by_id,reflush_user_chat
-from promot import ds_pormpt
+from src.crud.user_db import get_user_by_id,reflush_user_chat
 from .air_scraper import get_air_info
-from promot import tools_list
 from config import get_ds_client
-from sqlalchemy.ext.asyncio import AsyncSession
+from src.schemas.base import DATE
+from promot import ds_pormpt
+from promot import tools_list
 
 def send_message(message):
     ds_client = get_ds_client()

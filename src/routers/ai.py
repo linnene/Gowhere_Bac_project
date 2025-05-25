@@ -1,8 +1,8 @@
-from ..crud.dp import chat_loop_block
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from ..db.db import get_db
+from src.crud.dp import chat_loop_block
+from src.db.db import get_db
 
 router = APIRouter()
 

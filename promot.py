@@ -73,5 +73,3 @@ class Sp_Pormpt :
     """
 
 sp_pormpt = Sp_Pormpt()
-
-print(Ds_Pormpt.system_content)
