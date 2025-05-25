@@ -70,6 +70,8 @@ class UserCreate(UserSignUp):
     
     role: RoleType = RoleType.user
 
+    ChatHistory: str|None
+
     class Config:
         from_attributes = True
 

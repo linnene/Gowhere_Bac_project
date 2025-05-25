@@ -1,6 +1,5 @@
-from sqlalchemy import String, Boolean, Enum
+from sqlalchemy import String, Boolean, Enum, Text
 from sqlalchemy.orm import mapped_column, Mapped
-from typing import Text
 
 from .base import Base
 from ..schemas.role import RoleType
@@ -23,8 +22,8 @@ class User(Base):
     UserEmailVerified: Mapped[bool] = mapped_column(Boolean, default=False)
     
     #Ai Chat 
-    ChatHistory = mapped_column(Text,default=None)#type:ignore
-
+    ChatHistory: Mapped[str|None] = mapped_column(Text, default=None)
+    
     # is BAN
     Is_Ban: Mapped[bool] = mapped_column(Boolean, default=True)
 

@@ -1,6 +1,7 @@
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
+import json
 
 from ..models.user import User
 from ..schemas.user import UserCreate,UserUpdate
@@ -43,7 +44,7 @@ async def get_user_by_email(email: str, db: AsyncSession) -> User:
         raise HTTPException(status_code=404, detail="User not found")
     return user
 
-async def get_user_by_id(user_id: str, db: AsyncSession ):
+async def get_user_by_id(user_id: str, db: AsyncSession):
 
     """
     通过用户ID获取用户信息
@@ -74,6 +75,20 @@ async def reflush_user(new_user: UserUpdate ,user_id: str ,db: AsyncSession):
         cur_user.UserEmail = new_user.UserEmail
         cur_user.Is_Ban = new_user.Is_Ban
         await db.flush()
+        
+    return cur_user
+
+async def reflush_user_chat(user_id: str,db: AsyncSession, chat: list[dict]):
+    """
+    更新用户对话记录
+    """
+    async with db.begin():
+        cur_user = await get_user_by_id(user_id, db) 
+        if cur_user is None:
+            raise HTTPException(status_code=404, detail="User not found")
+        
+        cur_user.ChatHistory = json.dumps(chat)
+    await db.flush()
         
     return cur_user
 

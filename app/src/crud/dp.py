@@ -1,22 +1,20 @@
 #type: ignore
-import os
 from typing import List
 import json
 
 # from crud.dp import get_chat_by_id
-from ..schemas.tools import Hotel
 from ..schemas.base import DATE
+from ..crud.user_db import get_user_by_id,reflush_user_chat
 from promot import ds_pormpt
 from .air_scraper import get_air_info
 from promot import tools_list
 from config import get_ds_client
-
+from sqlalchemy.ext.asyncio import AsyncSession
 
 def send_message(message):
     ds_client = get_ds_client()
     response = ds_client.chat.completions.create(
         model="deepseek-chat",
-        #直接
         messages=message,
         stream=False,
         response_format={"type":"json_object"},
@@ -142,22 +140,24 @@ def  get_weather_by_loc(location:str,date):
     """
     pass
 
+CHAT = [{"role": ds_pormpt.system_role, "content": ds_pormpt.system_content}]
 
-
-def get_chat_by_id(UserId: str):
+async def get_chat_by_id(UserId:str,db:AsyncSession)-> List[dict]:
     """
     获取指定用户的对话
     """
+    user = await get_user_by_id(UserId,db)
+
+    if user.ChatHistory == "" or user.ChatHistory == "string":
+        user.ChatHistory = json.dumps(CHAT)
+    
+    user_chat = json.loads(user.ChatHistory)
+
+    return user_chat
 
 
-#暂时的
-CHAT = [{"role": ds_pormpt.system_role, "content": ds_pormpt.system_content}]
-
-#type: ignore
-def chat_loop_block(message,UserId:str):
-    user_chat = CHAT
-    #TODO: to make this func come to be real
-    # user_chat = get_chat_by_id(UserId)
+async def chat_loop_block(message:str , UserId:str, db:AsyncSession):
+    user_chat = await get_chat_by_id(UserId,db)
 
     user_chat.append(
         {
@@ -175,7 +175,8 @@ def chat_loop_block(message,UserId:str):
                 "content" : response_result["content"]}
         )
 
-        print("Assistant:", response_result["content"])   
+        await reflush_user_chat(UserId,db,user_chat)
+        return user_chat
     elif response_result["type"] == "tool_call":
         for call in response_result["tool_calls"]:
             user_chat.append({
@@ -188,9 +189,7 @@ def chat_loop_block(message,UserId:str):
                     }
                 ]
             })
-
-            tool_result = handle_tool_call(call)
-
+            tool_result = handle_tool_call(call)   
             user_chat.append(
                 {
                     "role": "tool",
@@ -198,6 +197,9 @@ def chat_loop_block(message,UserId:str):
                     "content": f"{json.dumps(tool_result, ensure_ascii=False)}"
                 }
             )
+            await reflush_user_chat(UserId,db,user_chat)
+
+            return user_chat
             
     elif response_result["type"] == "error":
-        print("发生错误：", response_result["error"])
+        raise ValueError(f"工具调用失败: {response_result['error']}")
