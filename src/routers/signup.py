@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi import APIRouter, Depends ,HTTPException
 from ..db.db import get_db
-from typing import Annotated,Union
+from typing import Annotated, Union, Optional
 
 from ..schemas.user import UserRead,UserSignUp,UserCreate
 from ..crud.user_db import create_user,get_user_by_id
@@ -46,8 +46,9 @@ async def creat_user(
 response_model=UserRead
 )
 async def get_user(
-    user_id: str, 
-    db: Annotated[AsyncSession , Depends(get_db)]
+    db: Annotated[AsyncSession , Depends(get_db)],
+    user_id: Union[str, None] = None,
+    Tokens: Union[str, None] = None
     ):
 
     """
@@ -57,6 +58,10 @@ async def get_user(
     """
 
     #TODO：前置判断
-
-    user = await get_user_by_id(user_id, db)
-    return user
+    if user_id is None and Tokens is None:
+        raise HTTPException(status_code=400, detail="User ID or Token must be provided")
+    elif user_id:
+        user = await get_user_by_id(user_id, db)
+        return user
+    else:
+        pass

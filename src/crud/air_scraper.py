@@ -28,7 +28,8 @@ def get_air_info(dep: str, des: str, date: DATE) -> list[Air]:
     """
 
     options = webdriver.ChromeOptions()
-    # options.add_argument('--headless')  # 如需无界面，取消注释
+    options.add_argument('--headless') 
+    
     driver = webdriver.Chrome(options=options)
 
     try:
@@ -72,7 +73,6 @@ def get_air_info(dep: str, des: str, date: DATE) -> list[Air]:
                 Des_time = element.find_element(By.XPATH, ".//*[contains(@class, 'arrive-box')]/div[1]")
                 Dep_time = element.find_element(By.XPATH, ".//*[contains(@class, 'depart-box')]/div[1]")
                 airline = element.find_element(By.XPATH, ".//*[contains(@class, 'airline-name')]")
-                # flight_number = element.find_element(By.XPATH, ".//*[contains(@class, 'plane-No')]")
                 
                     # 修改处理到达时间的部分
                 des_time_text = Des_time.text.strip()
@@ -82,9 +82,9 @@ def get_air_info(dep: str, des: str, date: DATE) -> list[Air]:
                 if '+' in des_time_text:
                     # 分离时间和跨天信息
                     des_time_parts = des_time_text.split('+')
+                    next_day = int(des_time_parts[1].replace('天', '').strip())
                     des_time_text = des_time_parts[0].strip()
                     # 提取跨天天数，如 "+1天" 中的 1
-                    next_day = int(des_time_parts[1].replace('天', '').strip())
 
                 des_hour, des_minute = map(int, des_time_text.split(':'))
 
