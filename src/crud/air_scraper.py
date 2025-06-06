@@ -1,13 +1,15 @@
+from selenium.common.exceptions import NoSuchElementException
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium import webdriver
 import time
 import re
-from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.common.keys import Keys
 
 from src.schemas.base import DATE, TIME, Itinerary_time
-from src.schemas.tools import Air
 from config import path, id, config
+from src.schemas.tools import Air
 
 
 __all__ = ['get_air_info']
@@ -28,9 +30,9 @@ def get_air_info(dep: str, des: str, date: DATE) -> list[Air]:
     """
 
     options = webdriver.ChromeOptions()
-    options.add_argument('--headless') 
+    # options.add_argument('--headless') 
     
-    driver = webdriver.Chrome(options=options)
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),options=options)
 
     try:
         driver.get(path.AIR_SEARCH_PAGE)

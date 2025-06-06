@@ -3,7 +3,7 @@ import datetime
 
 
 #CRUD：从JSON模板文件中读取模板
-def load_template_from_json(file_path=f"H:\\Gowhere_Bac_project\\asset\\json\\travel_plan_template.json"):
+def load_template_from_json(file_path="./asset/json/travel_plan_template.json"):
     try:
         if os.path.exists(file_path):
             with open(file_path, 'r', encoding='utf-8') as f:

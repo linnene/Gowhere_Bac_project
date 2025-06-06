@@ -1,1 +1,2 @@
-uvicorn main:app --reload
+call ./.venv/Scripts/activate
+call uvicorn main:app --reload

@@ -1,9 +1,9 @@
 from fastapi import FastAPI
-from src.routers.main_route import api_route 
 from contextlib import asynccontextmanager
 
 from src.db.db import engine
 from src.models.base import Base
+from src.routers.main_route import api_route 
 
 #-----------在导入模块之后------------
 app = FastAPI()  

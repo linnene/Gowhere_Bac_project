@@ -55,7 +55,7 @@ async def encode_access_token(UserId:str,db:AsyncSession):
         func:
             编码accesstoken
         return:
-            accessToken
+            accessToken  
     """
 
     # 获取当前 UTC 时间
@@ -86,34 +86,30 @@ async def encode_access_token(UserId:str,db:AsyncSession):
 
     return access_token
 
-async def v_refresh_token(refresh_token:str):
+async def v_refresh_token(refresh_token: str):
     """
-        验证refreshToken
+    验证 refreshToken
     """
+    try:
+        payload = jwt.decode(refresh_token, settings.token_secret_key, algorithms=['HS256'])
+        if payload['exp'] < int(datetime.now(timezone.utc).timestamp()):
+            raise HTTPException(status_code=400, detail="refreshToken 已经过期")
+        return payload
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=400, detail="refreshToken 已经过期")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=400, detail="无效的 refreshToken")
 
-    pyload = jwt.decode(
-            refresh_token, 
-            settings.token_secret_key, 
-            algorithms=['HS256']
-    )
-
-    if pyload['exp'] < int(datetime.now(timezone.utc).timestamp()):
-        return True
-    else:
-        raise HTTPException(status_code=400,detail="refreshtoken已经过期")
-
-async def v_access_token(accesstoken:str):
+async def v_access_token(access_token: str):
     """
-        验证accessToken
+    验证 accessToken
     """
-    
-    pyload = jwt.decode(
-            accesstoken, 
-            settings.token_secret_key, 
-            algorithms=['HS256']
-    )
-
-    if pyload['exp'] < int(datetime.now(timezone.utc).timestamp()):
-        return True
-    else:
-        raise HTTPException(status_code=400,detail="accesstoken已经过期")
+    try:
+        payload = jwt.decode(access_token, settings.token_secret_key, algorithms=['HS256'])
+        if payload['exp'] < int(datetime.now(timezone.utc).timestamp()):
+            raise HTTPException(status_code=400, detail="accessToken 已经过期")
+        return payload
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=400, detail="accessToken 已经过期")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=400, detail="无效的 accessToken")

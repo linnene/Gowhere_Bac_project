@@ -1,8 +1,0 @@
-repos:
-  - repo: local
-    hooks:
-      - id: update-requirements
-        name: Update requirements.txt
-        entry: bash scripts/update_requirements.sh
-        language: system
-        types: [python]

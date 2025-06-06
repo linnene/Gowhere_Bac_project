@@ -1,11 +1,11 @@
 from fastapi import APIRouter ,BackgroundTasks,Depends
 
-from ..schemas.email import EmailSchema
 from fastapi.responses import JSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import Annotated
 
 
+from ..schemas.email import EmailSchema
 from ..crud.email import send_email
 from ..crud.redis_utils import verify_redis_code
 from ..crud.user_db import set_user_emaliVer

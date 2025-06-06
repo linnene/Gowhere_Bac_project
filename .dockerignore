@@ -1,0 +1,15 @@
+.venv
+.vscode/
+config.yaml
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+./tests
+.coverage
+htmlcov/
+.pytest_cache/
+scripts
+.github
