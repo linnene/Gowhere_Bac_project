@@ -129,40 +129,40 @@ def get_Hotel_by_name(hotel_name:str,date:DATE):
     pass
 
 #CRUD：获取指定地点天气信息 TODO:实现函数
-"""
-目前只有国内编码数据库，国外天气数据考虑使用google maps API 或者爬虫网站
-"""
 def  get_weather_by_loc(location:str,date):
     """
     获取指定地点的天气信息
     """
     pass
 
+#CRUD：获取指定用户对话历史 TODO:实现函数
 CHAT = [{"role": ds_pormpt.system_role, "content": ds_pormpt.system_content}]
-
 async def get_chat_by_id(UserId:str,db:AsyncSession)-> List[dict]:
     """
     获取指定用户的对话
     """
-    user = await get_user_by_id(UserId,db)
+    try:
+        user = await get_user_by_id(UserId,db)
 
-    if user.ChatHistory == "" or user.ChatHistory == "string":
-        user.ChatHistory = json.dumps(CHAT)
-    
-    user_chat = json.loads(user.ChatHistory)
+        if user.ChatHistory == None or user.ChatHistory == "string":
+            user.ChatHistory = json.dumps(CHAT)
+        
+        user_chat = json.loads(user.ChatHistory)
 
-    return user_chat
+        return user_chat
+    except Exception as e:
+        return CHAT
 
-
-async def chat_loop_block(message:str , UserId:str, db:AsyncSession):
+async def chat_loop_block(message:str|None , UserId:str, db:AsyncSession):
     user_chat = await get_chat_by_id(UserId,db)
-
-    user_chat.append(
-        {
-            "role" : "user",
-            "content": message
-        }
-    )
+    if message:
+        user_chat.append(
+            {
+                "role" : "user",
+                "content": message
+            }
+        )
+    
 
     chat_completion = send_message(user_chat)
     response_result = extract_text(chat_completion)
@@ -197,7 +197,7 @@ async def chat_loop_block(message:str , UserId:str, db:AsyncSession):
             )
             await reflush_user_chat(UserId,db,user_chat)
 
-            return user_chat
+            return await chat_loop_block(None,UserId,db)
             
     elif response_result["type"] == "error":
         raise ValueError(f"工具调用失败: {response_result['error']}")
